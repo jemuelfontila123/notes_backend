@@ -1,7 +1,9 @@
 require('./services/dotenv')
 const http = require('http')
+const express= require('express')
+const app = express()
 
-let notes = [
+exports.notes = [
     {
       id: 1,
       content: "HTML is easy",
@@ -20,11 +22,11 @@ let notes = [
       date: "2019-05-30T19:20:14.298Z",
       important: true
     }
-  ]
-const app = http.createServer((req, res) => {
-    res.writeHead(200, {'Content-Type': 'application/json'})
-    res.end(JSON.stringify(notes))
-})
+]
+
+// Notes Router
+const noteRouter = require('./routes/noteRouter')
+app.use('/',noteRouter)
 
 app.listen(process.env.PORT)
 console.log(`Server running on ${process.env.PORT}`)
