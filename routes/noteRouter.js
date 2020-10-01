@@ -2,8 +2,15 @@ const express = require('express')
 const router = express.Router()
 const noteController = require('../controller/noteController')
 
-router.get('/', noteController.getNotes)
-router.get('/:id', noteController.getNoteById)
+
+router.route('/')
+    .get(noteController.getNotes)
+    .post(noteController.addNote)
+
+router.route('/:id')
+    .get(noteController.getNoteById)
+    .delete(noteController.deleteNoteById)
+
 
 
 

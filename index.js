@@ -24,6 +24,7 @@ exports.notes = [
     }
 ]
 
+app.use(express.json());
 // Notes Router
 const noteRouter = require('./routes/noteRouter')
 app.use('/',noteRouter)
