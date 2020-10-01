@@ -1,5 +1,6 @@
 require('./services/dotenv')
 const express= require('express')
+const cors = require('cors')
 const middleware = require('./services/middleware')
 const app = express()
 
@@ -23,12 +24,12 @@ exports.notes = [
       important: true
     }
 ]
-
+app.use(cors())
 app.use(express.json());
 // Notes Router
 const noteRouter = require('./routes/noteRouter')
 app.use('/',noteRouter)
 app.use(middleware.unknownEndPoint)
 
-app.listen(process.env.PORT)
+app.listen(process.env.PORT || 3001)
 console.log(`Server running on ${process.env.PORT}`)
