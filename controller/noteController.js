@@ -18,15 +18,7 @@ exports.deleteNoteById = (req, res) => {
   res.json(notes)
   //res.status(204).end()
 }
-// exports.addNote = (req, res) => {
-//     const note = req.body;
-//     if(!note.content){
-//         return res.status(400).json({error: 'content missing'})
-//     }
-//     note.id = notes.length === 0 ? 0 : notes.length + 1;
-//     notes = notes.concat(note)
-//     res.json(notes)
-// }
+
 
 exports.addNote = [
     // must not be empty

@@ -1,6 +1,6 @@
 require('./services/dotenv')
-const http = require('http')
 const express= require('express')
+const middleware = require('./services/middleware')
 const app = express()
 
 exports.notes = [
@@ -28,6 +28,7 @@ app.use(express.json());
 // Notes Router
 const noteRouter = require('./routes/noteRouter')
 app.use('/',noteRouter)
+app.use(middleware.unknownEndPoint)
 
 app.listen(process.env.PORT)
 console.log(`Server running on ${process.env.PORT}`)
