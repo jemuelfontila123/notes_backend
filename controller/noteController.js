@@ -1,23 +1,22 @@
-const index = require('../index')
 const { body, validationResult } = require('express-validator');
 
-let notes = index.notes;
+const Note = require('../models/Note')
+
 exports.getNotes= (req, res) => {
-    res.json(notes)
+    Note.find({})
+      .then(result => res.json(result))
 }
 exports.getNoteById = (req, res) => {
-    const id = req.params.id;
-    const note = notes.find(note => note.id === parseInt(id))
-    if(note)
-        res.json(note)
-    res.status(404).end()
+    Note.findById(req.params.id)
+    .then(result => res.json(result))
+    // res.status(400).end()
 }
-exports.deleteNoteById = (req, res) => {
-  const id = Number(req.params.id)
-  notes = notes.filter(note => note.id !== id)
-  res.json(notes)
-  //res.status(204).end()
-}
+// exports.deleteNoteById = (req, res) => {
+//   const id = Number(req.params.id)
+//   notes = notes.filter(note => note.id !== id)
+//   res.json(notes)
+//   //res.status(204).end()
+// }
 
 
 exports.addNote = [
@@ -29,10 +28,17 @@ exports.addNote = [
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    const note = req.body;
-    note.id = notes.length === 0 ? 0 : notes.length + 1;
-    notes = notes.concat(note)
-    res.json(notes)
+    const {content} = req.body;
+    const note = new Note({
+      content: content,
+      date: new Date(),
+      important: false
+    })
+   note.save()
+   .then( result => {
+     res.json(result)
+   })
+   
   
 }]
 
