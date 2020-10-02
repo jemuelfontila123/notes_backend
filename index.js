@@ -15,7 +15,7 @@ app.use(express.json());
 const noteRouter = require('./routes/noteRouter')
 app.use('/api/notes',noteRouter)
 app.use(middleware.unknownEndPoint)
-
+app.use(middleware.errorHandler)
 
 app.listen(process.env.PORT)
 console.log(`Server running on ${process.env.PORT}`)
