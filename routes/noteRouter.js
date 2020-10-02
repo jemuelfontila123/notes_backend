@@ -10,7 +10,7 @@ router.route('/')
 
 router.route('/:id')
     .get(noteController.getNoteById)
-//     .delete(noteController.deleteNoteById)
+    .delete(noteController.deleteNoteById)
 
 
 
