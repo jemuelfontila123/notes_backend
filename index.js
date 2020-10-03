@@ -7,6 +7,7 @@ const app = express()
 
 // connectDB.connect()
 mongoose.connect(process.env.uri, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true})
+app.use(express.static('build'))
 app.use(cors())
 app.use(express.json());
 // Notes Router
