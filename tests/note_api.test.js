@@ -4,25 +4,13 @@ const app = require('../app')
 const api = supertest(app)
 const baseUrl = '/api/notes/'
 const Note = require ('../models/Note')
-
-const initialNotes = [
-    {
-      content: 'HTML is easy',
-      date: new Date(),
-      important: false,
-    },
-    {
-      content: 'Browser can execute only Javascript',
-      date: new Date(),
-      important: true,
-    },
-  ]
+const helper = require ('./notesHelper')
 beforeEach(async () => {
     await Note.deleteMany({})
-    let noteObject = new Note(initialNotes[0])
-    await noteObject.save()
-    noteObject = new Note(initialNotes[1])
-    await noteObject.save()
+    const noteObjects = helper.initialNotes.map(note => new Note(note))
+    const promiseArray = noteObjects.map(note => note.save())
+    await Promise.all(promiseArray)
+    
 })
 
 
