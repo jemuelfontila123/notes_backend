@@ -19,7 +19,7 @@ describe('to test if there are saved notes', () => {
     
         expect(response.body).toHaveLength(helper.initialNotes.length)
     })
-    test('a specific note is within the returned notes', async () => {
+    test.only('a specific note is within the returned notes', async () => {
         const response = await api.get(baseUrl)
       
         const contents = response.body.map(r => r.content)
@@ -66,12 +66,12 @@ describe('addition of new note', () => {
     })
 })
 describe('deletion of note', () => {
+    
     test('valid note should be deleted' , async () => {
         const response = await api.get(baseUrl)
         const initialNotes = response.body;
-        const blogToBeDeleted = initialNotes[0];
-    
-        const deleteBlog = await api.delete(`${baseUrl}${blogToBeDeleted.id}`).expect(200)
+        const noteToBeDeleted = initialNotes[0];
+        await api.delete(`${baseUrl}${noteToBeDeleted.id}`).expect(200)
     })
     test('invalid id should not succeed', async () => {
         await api.delete(`${baseUrl}f432f23f32532532`).expect(400)
