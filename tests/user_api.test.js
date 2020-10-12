@@ -33,8 +33,6 @@ describe('adding of user' , () => {
             password
         }
         const response = await api.post(baseUrl).send(user).expect(200)
-
-
         expect(response.body.username).toBe('beer')
     })
 })

@@ -5,7 +5,8 @@ router.route('/')
     .post(userController.createUser)
     .get(userController.getUsers)
 
-// router.route('/:id')
-//     .delete()
-//     .get()
+router.post('/login',userController.loginUser)   
+
+router.route('/:id')
+    .get(userController.getUser)
 module.exports = router;

@@ -2,7 +2,7 @@ exports.unknownEndPoint = (req , res) => res.status(400).send({error: 'unknown e
 
 exports.errorHandler = (error, req, res, next) => {
     console.log(error.name)
-
+    if(error.message==='invalid username or password') {res.status(401).json({error: 'invalid username or password'})}
     if(error.name==='CastError') { res.status(400).send({error: 'malformatted id'})}
     if(error.message==='invalid id') {res.status(400).send({error: 'id does not exist'})}
 }
