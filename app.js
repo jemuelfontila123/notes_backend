@@ -19,8 +19,10 @@ mongoose.connect(config.uri, { useNewUrlParser: true, useUnifiedTopology: true, 
 app.use(cors())
 app.use(express.json());
 
-app.use('/api/notes',noteRouter)
-app.use('/api/users',userRouter)
+app.use(middleware.getTokenFrom)
+app.use('/api/notes', noteRouter)
+
+app.use('/api/users', userRouter)
 app.use(middleware.unknownEndPoint)
 app.use(middleware.errorHandler)
 

@@ -1,6 +1,6 @@
 const User = require('../models/User')
 const bcrypt = require('bcrypt')
-const jwt = require('jasonwebtoken')
+const jwt = require('jsonwebtoken')
 require('express-async-errors');
 
 
@@ -10,16 +10,15 @@ exports.getUsers = async(request, response) => {
     response.json(users)
 }
 exports.createUser = async(request, response) => {
-    let { username, name, password } = request.body;
+    const { username, name, password } = request.body;
 
-    password = await bcrypt(password, 10)
+    const passwordHash = await bcrypt.hash(password, 10)
 
     const user = new User({
         username,
         name,
-        password
+        password: passwordHash
     })
-
     const savedUser = await user.save()
     response.json(savedUser)
 }
