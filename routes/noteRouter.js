@@ -7,7 +7,9 @@ router.route('/')
     .get(noteController.getNotes)
     .post(noteController.addNote)
 
-
+router.route('/userNotes')
+    .get(noteController.getNotesByUser)
+    
 router.route('/:id')
     .get(noteController.getNoteById)
     .delete(noteController.deleteNoteById)

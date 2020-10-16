@@ -9,6 +9,11 @@ exports.getNotes= async (req, res) => {
       .populate('user',{ username:1, name:1 })
     res.json(savedNotes)
 }
+exports.getNotesByUser = async(req, res) => {
+  const decodedToken = jwt.verify(res.token, process.env.SECRET)
+  const notesOfUser = await Note.find({ user: decodedToken.id})
+  res.json(notesOfUser)
+}
 exports.getNoteById = async (req, res) => {
     const givenNote = await Note.findById(req.params.id)
       .populate('user', { username:1, name:1 })
@@ -16,6 +21,11 @@ exports.getNoteById = async (req, res) => {
     res.json(givenNote)
 }
 exports.deleteNoteById = async (req, res) => {
+    const decodedToken = jwt.verify(res.token, process.env.SECRET)
+    const noteToBeDeleted = await Note.findById(req.params.id)
+    if(decodedToken.id.toString() !== noteToBeDeleted.user.toString()){
+      throw Error('invalid user')
+    }
     const deletedNote = await Note.findByIdAndDelete(req.params.id)
     if(!deletedNote) throw Error('invalid id')
     res.status(200).end()
