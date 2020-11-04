@@ -13,6 +13,7 @@ router.route('/userNotes')
 router.route('/:id')
     .get(noteController.getNoteById)
     .delete(noteController.deleteNoteById)
+    .put(noteController.updateNoteById)
 
 
 

@@ -30,7 +30,22 @@ exports.deleteNoteById = async (req, res) => {
     if(!deletedNote) throw Error('invalid id')
     res.status(200).end()
 }
-
+exports.updateNoteById = [
+  // Validation
+  body('content').isLength({min:5}),
+  // Sanitization
+  body('content').not().isEmpty().escape()
+  ,async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) { throw (errors) }
+  const decodedToken = jwt.verify(res.token, process.env.SECRET)
+  const noteToBeUpdated = await Note.findByIdAndUpdate(req.params.id, {content: content})
+  if(decodedToken.id.toString() !== noteToBeDeleted.user.toString()){
+    throw Error('invalid user')
+  }
+  res.status(200).end()
+}
+]
 exports.addNote = [
     // must not be empty
     body('content').isLength({ min: 5})
